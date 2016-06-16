@@ -1,4 +1,4 @@
-package com.taylor.amq;
+package com.taylor.amq.producer;
 
 public interface SendMessage {
 

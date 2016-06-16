@@ -1,10 +1,10 @@
-package com.taylor.amq;
+package com.taylor.amq.producer;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,21 +13,21 @@ import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SendQueueMessageImpl implements SendMessage {
+public class SendTopicMessageImpl implements SendMessage {
 
 	@Autowired
 	private JmsTemplate jmsTemplate;
 
 	@Autowired
-	@Qualifier("taylorQueue")
-	private Queue queue;
+	@Qualifier("taylorTopic")
+	private Topic topic;
 
 	public void setJmsTemplate(JmsTemplate jmsTemplate) {
 		this.jmsTemplate = jmsTemplate;
 	}
 
 	public void sendMessage(final String message) {
-		jmsTemplate.send(queue, new MessageCreator() {
+		jmsTemplate.send(topic, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
 				TextMessage textMessage = session.createTextMessage(message);
